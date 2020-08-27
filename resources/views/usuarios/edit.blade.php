@@ -78,7 +78,7 @@
                             <input type="password" name="password" id="password"
                                 class="form-control
                                                             form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                placeholder="{{ __('Digite sua senha') }}" value="" required>
+                                placeholder="{{ __('Digite sua senha') }}" value="">
 
                             @if ($errors->has('password'))
                             <span class="invalid-feedback" role="alert">
