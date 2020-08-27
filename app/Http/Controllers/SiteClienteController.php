@@ -44,7 +44,7 @@ class SiteClienteController extends Controller
         $categorias = DB::table('categoria')->select('categoria.nome', 'categoria.id')->where('deleted_at', '=', null)->get();
         $nomeCategoria = DB::table('categoria')->select('categoria.nome')->where('categoria.id', '=', $id)->value('categoria.nome');
         $nomeSubCategoria = DB::table('sub_categoria')->select('sub_categoria.nome')->join('categoria', 'categoria.id', '=', 'sub_categoria.categoria_id')->where('categoria.id', '=', $id)->value('categoria.nome');
-        return view('site_clientes.sub_categoria', ['categorias' => $categorias, 'codigo' => $codigo, 'nomeCategoria' => $nomeCategoria, 'sub_categorias' => $sub_categorias, 'nomeSubCategoria'=> $nomeSubCategoria]);
+        return view('site_clientes.sub_categoria', ['categorias' => $categorias, 'codigo' => $codigo, 'nomeCategoria' => $nomeCategoria, 'sub_categorias' => $sub_categorias, 'nomeSubCategoria'=> $nomeSubCategoria, 'id'=>$id]);
     }
 
     /**

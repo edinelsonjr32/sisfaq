@@ -82,6 +82,12 @@
                             <div class="col-8">
                                 <h3 class="mb-0">{{$nomeCategoria}} / {{$nomeSubCategoria}}</h3>
                             </div>
+                            <div class="col-4 text-right">
+                                <!-- Button trigger modal -->
+                                <a type="button" href="{{route('site.categoria', [$codigo, $id])}}" class="btn btn-primary">
+                                    Voltar para Gerenciamento de Usuário
+                                </a>
+                            </div>
 
                         </div>
                     </div>
