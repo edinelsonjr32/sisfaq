@@ -144,9 +144,13 @@
                                     <form action="{{ route('cliente.destroy', $dado->id) }}" method="post">
                                         @csrf
                                         @method('delete')
+                                        <a type="button" href="{{route('cliente.show', $dado->id)}}"
+                                            class="btn btn-sm btn-default">
+                                            Detalhe
+                                        </a>
                                         <a type="button" href="{{route('cliente.edit', $dado->id)}}"
                                             class="btn btn-sm btn-warning">
-                                            <i class="ni ni-settings"></i>
+                                            Editar
                                         </a>
                                         <button type="button" href="#" class="btn btn-sm bg-danger text-white"
                                             onclick="confirm('{{ __("Você tem certeza que deseja excluir?") }}') ? this.parentElement.submit() : ''">

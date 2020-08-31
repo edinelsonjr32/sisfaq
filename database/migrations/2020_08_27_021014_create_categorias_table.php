@@ -17,6 +17,8 @@ class CreateCategoriasTable extends Migration
             $table->id();
             $table->string('nome')->nullable();
             $table->boolean('status')->default(true);
+            $table->unsignedBigInteger('cliente_id');
+            $table->foreign('cliente_id')->references('id')->on('cliente');
             $table->softDeletes();
             $table->timestamps();
         });

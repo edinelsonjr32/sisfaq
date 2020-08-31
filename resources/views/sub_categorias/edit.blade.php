@@ -18,6 +18,7 @@
     <div class="row">
         <div class="col">
             <div class="card shadow">
+                @foreach ($subCategoria as $dado)
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col-8">
@@ -25,17 +26,20 @@
                         </div>
                         <div class="col-4 text-right">
                             <!-- Button trigger modal -->
-                            <a type="button" href="{{route('sub_categoria.index')}}" class="btn btn-primary">
-                                Voltar para Gerenciamento de Sub Categoria
+                            <a type="button" href="{{route('cliente.show', $dado->cliente_id)}}" class="btn btn-primary">
+                                Voltar para Gerenciamento de cliente
                             </a>
                         </div>
                     </div>
                 </div>
 
 
-                <form role="form" method="POST" action="{{ route('sub_categoria.update', $subCategoria->id) }}">
+
+
+                <form role="form" method="POST" action="{{ route('sub_categoria.update', $dado->id) }}">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" name="cliente_id" value="{{ $dado->cliente_id }}">
                     <div class="pl-lg-4">
                         <div class="form-group{{ $errors->has('nome') ? ' has-danger' : '' }}">
                             <div class="text-left">
@@ -45,7 +49,7 @@
                             <input type="text" name="nome" id="nome"
                                 class="form-control
                                                             form-control-alternative{{ $errors->has('nome') ? ' is-invalid' : '' }}"
-                                placeholder="{{ __('Digite o nome') }}" value="{{$subCategoria->nome}}" required>
+                                placeholder="{{ __('Digite o nome') }}" value="{{$dado->nome}}" required>
 
                             @if ($errors->has('nome'))
                             <span class="invalid-feedback" role="alert">
@@ -59,7 +63,9 @@
                             </div>
                             <select class="form-control" id="exampleFormControlSelect1" name="categoria_id">
                                 @foreach ($categorias as $item)
-                                <option value="{{$item->id}}" {{old('categoria_id') == $item->id ? 'selected' : ($subCategoria->categoria_id == $item->id ? 'selected' : '')}}>{{$item->nome}}</option>
+                                <option value="{{$item->id}}"
+                                    {{old('categoria_id') == $item->id ? 'selected' : ($dado->categoria_id == $item->id ? 'selected' : '')}}>
+                                    {{$item->nome}}</option>
 
                                 @endforeach
 
@@ -80,6 +86,8 @@
                     </div>
 
                 </form>
+
+                @endforeach
             </div>
         </div>
     </div>

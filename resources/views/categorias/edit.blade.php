@@ -36,6 +36,7 @@
                 <form role="form" method="POST" action="{{ route('categoria.update', $categoria->id) }}">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" name="cliente_id" value="{{ $categoria->cliente_id }}">
                     <div class="pl-lg-4">
                         <div class="form-group{{ $errors->has('nome') ? ' has-danger' : '' }}">
                             <div class="text-left">
@@ -61,7 +62,7 @@
 
                     <div class="card-footer py-4">
                         <nav class="d-flex justify-content-end" aria-label="...">
-                            <a type="button" href="{{route('categoria.index')}}"
+                            <a type="button" href="{{route('cliente.show', $categoria->cliente_id)}}"
                                 class="btn btn-danger col-md-2 text-center text-white">Sair</a>
                             <button type="submit" class="btn btn-success col-md-2 text-white">Salvar</button>
                         </nav>

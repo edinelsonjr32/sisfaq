@@ -42,9 +42,9 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">
-                                            <form role="form" method="POST" action="{{ route('categoria.store') }}">
-                                                @csrf
+                                        <form role="form" method="POST" action="{{ route('categoria.store') }}">
+                                            @csrf
+                                            <div class="modal-body">
                                                 <div class="pl-lg-4">
                                                     <div
                                                         class="form-group{{ $errors->has('nome') ? ' has-danger' : '' }}">
@@ -56,8 +56,7 @@
                                                         <input type="text" name="nome" id="nome"
                                                             class="form-control
                                                             form-control-alternative{{ $errors->has('nome') ? ' is-invalid' : '' }}"
-                                                            placeholder="{{ __('Digite o nome') }}" value=""
-                                                            required>
+                                                            placeholder="{{ __('Digite o nome') }}" value="" required>
 
                                                         @if ($errors->has('nome'))
                                                         <span class="invalid-feedback" role="alert">
@@ -69,12 +68,12 @@
 
 
                                                 </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Sair</button>
-                                            <button type="submit" class="btn btn-primary">Salvar</button>
-                                        </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Sair</button>
+                                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -95,25 +94,25 @@
                         <tbody>
                             @if ($categoria == '')
                             @else
-                                @foreach ($categoria as $dado)
-                                <tr>
-                                    <td>{{$dado->nome}}</td>
-                                    <td class="text-right">
-                                        <form action="{{ route('categoria.destroy', $dado->id) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <a type="button" href="{{route('categoria.edit', $dado->id)}}"
-                                                class="btn btn-sm btn-warning">
-                                                <i class="ni ni-settings"></i>
-                                            </a>
-                                            <button type="button" href="#" class="btn btn-sm bg-danger text-white"
-                                                onclick="confirm('{{ __("Você tem certeza que deseja excluir?") }}') ? this.parentElement.submit() : ''">
-                                                <i class="fa fa-trash "></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
+                            @foreach ($categoria as $dado)
+                            <tr>
+                                <td>{{$dado->nome}}</td>
+                                <td class="text-right">
+                                    <form action="{{ route('categoria.destroy', $dado->id) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <a type="button" href="{{route('categoria.edit', $dado->id)}}"
+                                            class="btn btn-sm btn-warning">
+                                            <i class="ni ni-settings"></i>
+                                        </a>
+                                        <button type="button" href="#" class="btn btn-sm bg-danger text-white"
+                                            onclick="confirm('{{ __("Você tem certeza que deseja excluir?") }}') ? this.parentElement.submit() : ''">
+                                            <i class="fa fa-trash "></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
                             @endif
 
 

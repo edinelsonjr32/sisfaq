@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cliente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClienteController extends Controller
 {
@@ -63,9 +64,15 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Cliente $cliente)
     {
-        //
+
+        $idCliente = $cliente->id;
+        $categorias = DB::table('categoria')->select('categoria.*')->join('cliente', 'cliente.id', 'categoria.cliente_id')->where('cliente.id', '=',  $cliente->id)->where('categoria.deleted_at', null)->get();
+
+        $sub_categorias = DB::table('sub_categoria')->select('sub_categoria.*', 'categoria.nome as nomeCategoria')->join('categoria', 'categoria.id', '=', 'sub_categoria.categoria_id')->join('cliente', 'cliente.id', '=', 'categoria.cliente_id')->where('sub_categoria.deleted_at',null)->where('cliente.id', '=',  $cliente->id)->get();
+
+        return view('clientes.show', compact('cliente', 'categorias', 'sub_categorias', 'idCliente'));
     }
 
     /**

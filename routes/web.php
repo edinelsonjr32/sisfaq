@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
     Route::resource('cliente', 'ClienteController');
+    Route::get('cliente/{id}/tutorial/create', 'TutorialController@create')->name('cliente.tutorial.create');
     Route::resource('categoria', 'CategoriaController');
     Route::resource('sub_categoria', 'SubCategoriaController');
     Route::resource('tutorial', 'TutorialController');
@@ -36,4 +37,6 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('site/{codigo}/index', 'SiteClienteController@index')->name('site.index');
 Route::get('site/{codigo}/categoria/{id}', 'SiteClienteController@categoria')->name('site.categoria');
 Route::get('site/{codigo}/sub_categoria/{id}', 'SiteClienteController@subCategoria')->name('site.sub_categoria');
+
+Route::post('/site/{link_acesso}/busca/', 'SiteClienteController@busca')->name('site.busca');
 

@@ -12,6 +12,7 @@ class Categoria extends Model
     protected $table = 'categoria';
     protected $fillable = [
         'nome',
-        'status'
+        'status',
+        'cliente_id'
     ];
 }

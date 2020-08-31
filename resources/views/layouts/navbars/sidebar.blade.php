@@ -6,7 +6,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-3" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/logo_cod3cafe.png" class="navbar-brand-img" " alt="Logo Cod3 Café">
+            SisFaq
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -115,33 +115,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-examples4" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples4">
-                        <i class="ni ni-hat-3" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Tutoriais') }}</span>
-                    </a>
 
-                    <div class="collapse show" id="navbar-examples4">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('categoria.index') }}">
-                                    {{ __('Categorias ') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('sub_categoria.index') }}">
-                                    {{ __('Sub Categorias ') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tutorial.index') }}">
-                                    {{ __('Tutoriais ') }}
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </li>
             </ul>
 
             </ul>

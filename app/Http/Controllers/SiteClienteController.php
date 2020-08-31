@@ -15,9 +15,11 @@ class SiteClienteController extends Controller
     public function index($codigo)
     {
 
-        $categorias = DB::table('categoria')->select('categoria.nome', 'categoria.id')->where('deleted_at', '=', null)->get();
+        $categorias = DB::table('categoria')->select('categoria.nome', 'categoria.id')->join('cliente', 'cliente.id', '=', 'categoria.cliente_id')->where('categoria.deleted_at', '=', null)->where('cliente.link_acesso', '=', $codigo)->get();
 
-        return view('site_clientes.index', ['categorias' => $categorias, 'codigo'=>$codigo]);
+        $cliente = DB::table('cliente')->select('cliente.nome as nomeCliente', 'cliente.dominio', 'cliente.link_acesso')->where('cliente.link_acesso', '=',  $codigo)->get();
+        $versaoCliente = DB::table('cliente')->select('cliente.versao as versaoCliente')->where('cliente.link_acesso', '=',  $codigo)->value('cliente.versao');
+        return view('site_clientes.index', ['categorias' => $categorias, 'codigo'=>$codigo, 'cliente'=>$cliente, 'versaoCliente'=> $versaoCliente]);
     }
 
     /**
@@ -33,7 +35,10 @@ class SiteClienteController extends Controller
 
         $categorias = DB::table('categoria')->select('categoria.nome', 'categoria.id')->where('deleted_at', '=', null)->get();
         $nomeCategoria = DB::table('categoria')->select('categoria.nome')->where('categoria.id', '=', $id)->value('categoria.nome');
-        return view('site_clientes.categoria', ['categorias' => $categorias, 'codigo' => $codigo, 'nomeCategoria'=>$nomeCategoria, 'sub_categorias'=>$sub_categorias]);
+        $cliente = DB::table('cliente')->select('cliente.nome as nomeCliente','cliente.dominio', 'cliente.link_acesso')->where('cliente.link_acesso', '=',  $codigo)->get();
+        $versaoCliente = DB::table('cliente')->select('cliente.versao as versaoCliente')->where('cliente.link_acesso', '=',  $codigo)->value('cliente.versao');
+
+        return view('site_clientes.categoria', ['categorias' => $categorias, 'codigo' => $codigo, 'nomeCategoria'=>$nomeCategoria, 'sub_categorias'=>$sub_categorias, 'cliente' => $cliente, 'versaoCliente' => $versaoCliente]);
     }
 
     public function subCategoria($codigo, $id)
@@ -44,9 +49,25 @@ class SiteClienteController extends Controller
         $categorias = DB::table('categoria')->select('categoria.nome', 'categoria.id')->where('deleted_at', '=', null)->get();
         $nomeCategoria = DB::table('categoria')->select('categoria.nome')->where('categoria.id', '=', $id)->value('categoria.nome');
         $nomeSubCategoria = DB::table('sub_categoria')->select('sub_categoria.nome')->join('categoria', 'categoria.id', '=', 'sub_categoria.categoria_id')->where('categoria.id', '=', $id)->value('categoria.nome');
-        return view('site_clientes.sub_categoria', ['categorias' => $categorias, 'codigo' => $codigo, 'nomeCategoria' => $nomeCategoria, 'sub_categorias' => $sub_categorias, 'nomeSubCategoria'=> $nomeSubCategoria, 'id'=>$id]);
+        $cliente = DB::table('cliente')->select('cliente.nome as nomeCliente','cliente.dominio', 'cliente.link_acesso')->where('cliente.link_acesso', '=',  $codigo)->get();
+        $versaoCliente = DB::table('cliente')->select('cliente.versao as versaoCliente')->where('cliente.link_acesso', '=',  $codigo)->value('cliente.versao');
+
+        return view('site_clientes.sub_categoria', ['categorias' => $categorias, 'codigo' => $codigo, 'nomeCategoria' => $nomeCategoria, 'sub_categorias' => $sub_categorias, 'nomeSubCategoria'=> $nomeSubCategoria, 'id'=>$id, 'cliente' => $cliente, 'versaoCliente' => $versaoCliente]);
     }
 
+    public function busca(Request $request, $link_acesso){
+
+        $termo = $request->termo;
+
+
+        $dadosBuscados = DB::table('sub_categoria')->select('sub_categoria.*', 'categoria.nome as nomeCategoria')->join('categoria', 'categoria.id', '=', 'sub_categoria.categoria_id')->join('cliente', 'cliente.id', 'categoria.cliente_id')->where('sub_categoria.nome', 'LIKE', "%{$termo}%")->where('cliente.link_acesso', '=', $link_acesso)->where('sub_categoria.deleted_at', '=', null)->get();
+
+        $categorias = DB::table('categoria')->select('categoria.nome', 'categoria.id')->where('deleted_at', '=', null)->get();
+
+        $cliente = DB::table('cliente')->select('cliente.nome as nomeCliente', 'cliente.dominio', 'cliente.link_acesso')->where('cliente.link_acesso', '=',  $link_acesso)->get();
+        $versaoCliente = DB::table('cliente')->select('cliente.versao as versaoCliente')->where('cliente.link_acesso', '=',  $link_acesso)->value('cliente.versao');
+        return view('site_clientes.busca', ['termo' => $termo,'categorias' => $categorias, 'dadosBuscados'=> $dadosBuscados, 'codigo' => $link_acesso, 'cliente' => $cliente, 'versaoCliente' => $versaoCliente]);
+    }
     /**
      * Store a newly created resource in storage.
      *

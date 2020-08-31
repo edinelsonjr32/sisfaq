@@ -48,7 +48,6 @@ class TutorialController extends Controller
         $categoria = Categoria::findOrFail($request->categoria_id);
         $cliente = Cliente::findOrFail($request->cliente_id);
 
-
         $sub_categoria = SubCategoria::where('sub_categoria.categoria_id', $request->categoria_id)->get();
 
         return view('tutoriais.primeira_parte', ['titulo'=> $titulo, 'categoria'=> $categoria, 'cliente'=> $cliente, 'sub_categoria'=>  $sub_categoria]);
@@ -56,6 +55,7 @@ class TutorialController extends Controller
 
     public function store(Request $request, Tutorial $tutorial)
     {
+
         $tutorial->sub_categoria_id = $request->sub_categoria_id;
         $tutorial->cliente_id = $request->cliente_id;
         $tutorial->titulo = $request->titulo;
@@ -68,30 +68,22 @@ class TutorialController extends Controller
 
         if ($path_foto = $request->file('path_foto')) {
 
-
             $files = $request->path_foto;
-
-
-
-
             $extensao = $files->getClientOriginalExtension();
-
-
             $imageName = time() . '.' . $extensao;
             $tutorial->path_foto = $imageName;
             $request->path_foto->move(public_path('images'), $imageName);
-
             if ($tutorial->save() ) {
-                return redirect()->route('tutorial.index');
+                return redirect()->route('sub_categoria.show', $tutorial->sub_categoria_id);
             }else{
-                return redirect()->route('tutorial.index');
+                return redirect()->route('cliente.show', $tutorial->cliente_id);
             }
 
         } else {
             if ($tutorial->save()) {
-                return redirect()->route('tutorial.index');
+                return redirect()->route('sub_categoria.show', $tutorial->sub_categoria_id);
             } else {
-                return redirect()->route('tutorial.index');
+                return redirect()->route('cliente.show', $tutorial->cliente_id);
             }
         }
 

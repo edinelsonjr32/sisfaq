@@ -14,7 +14,7 @@ class CategoriaController extends Controller
      */
     public function index(Categoria $categoria)
     {
-        return view('categorias.index', ['categoria' => $categoria->all()]);
+        return view('categorias.index', ['categoria' => $categoria->Where()]);
     }
 
     /**
@@ -40,7 +40,7 @@ class CategoriaController extends Controller
         ]);
 
         if ($categoria->create($request->all())) {
-            return redirect()->route('categoria.index');
+            return redirect()->route('cliente.show', $request->cliente_id);
         }
     }
 
@@ -70,9 +70,10 @@ class CategoriaController extends Controller
         $request->validate([
             'nome'=> 'required'
         ]);
+        $cliente_id = $request->cliente_id;
         $categoria = Categoria::findOrFail($id);
         if ($categoria->update($request->all())) {
-            return redirect()->route('categoria.index');
+            return redirect()->route('cliente.show', $cliente_id);
         }
     }
 
@@ -84,9 +85,11 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
+
         $categoria = Categoria::findOrFail($id);
+        $cliente_id = $categoria->cliente_id;
         if ($categoria->delete()) {
-            return redirect()->route('categoria.index');
+            return redirect()->route('cliente.show', $cliente_id);
         }
     }
 }

@@ -49,9 +49,9 @@ class SubCategoriaController extends Controller
         $subCategoria->nome = $request->nome;
         $subCategoria->categoria_id = $request->categoria_id;
         if ($subCategoria->save()) {
-            return redirect()->route('sub_categoria.index');
+            return redirect()->route('cliente.show', $request->cliente_id);
         }else {
-            return redirect()->route('sub_categoria.index');
+            return redirect()->route('cliente.show', $request->cliente_id);
         }
 
     }
@@ -62,9 +62,19 @@ class SubCategoriaController extends Controller
      * @param  \App\SubCategoria  $subCategoria
      * @return \Illuminate\Http\Response
      */
-    public function show(SubCategoria $subCategoria)
+    public function show($id)
     {
-        //
+
+        $subCategoria = SubCategoria::findOrFail($id);
+        
+        $tutorial = DB::table('tutorial')->select('tutorial.*', 'sub_categoria.nome as nomeSubCategoria', 'categoria.nome as nomeCategoria', 'cliente.nome as nomeCliente' , 'cliente.id as cliente_id')->join('sub_categoria', 'sub_categoria.id', '=', 'tutorial.sub_categoria_id')->join('categoria', 'categoria.id', '=', 'sub_categoria.categoria_id')->join('cliente', 'cliente.id', '=', 'tutorial.cliente_id')->where('sub_categoria.id', '=', $id)->get();
+
+
+        $cliente_id = DB::table('tutorial')->select('cliente.id as cliente_id')->join('sub_categoria', 'sub_categoria.id', '=', 'tutorial.sub_categoria_id')->join('categoria', 'categoria.id', '=', 'sub_categoria.categoria_id')->join('cliente', 'cliente.id', '=', 'tutorial.cliente_id')->where('sub_categoria.id', '=', $id)->value('cliente.id');
+
+
+        return view('tutoriais.show', compact('subCategoria', 'tutorial', 'cliente_id'));
+
     }
 
     /**
@@ -75,7 +85,8 @@ class SubCategoriaController extends Controller
      */
     public function edit($id)
     {
-        $subCategoria = SubCategoria::findOrFail($id);
+        $subCategoria = DB::table('sub_categoria')->select('sub_categoria.*', 'cliente.id as cliente_id')->join('categoria', 'categoria.id', 'sub_categoria.categoria_id')->join('cliente', 'cliente.id','categoria.cliente_id')->where('sub_categoria.id', $id)->get();
+
         $categorias = Categoria::all();
 
         return view('sub_categorias.edit', ['subCategoria' => $subCategoria, 'categorias'=> $categorias]);
@@ -90,6 +101,7 @@ class SubCategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $subCategoria = SubCategoria::findOrFail($id);
 
         $request->validate([
@@ -99,11 +111,12 @@ class SubCategoriaController extends Controller
 
         $subCategoria->nome = $request->nome;
         $subCategoria->categoria_id = $request->categoria_id;
+        $cliente_id = $request->cliente_id;
 
         if ($subCategoria->update()) {
-            return redirect()->route('sub_categoria.index');
+            return redirect()->route('cliente.show', $cliente_id);
         } else {
-            return redirect()->route('sub_categoria.index');
+            return redirect()->route('cliente.show', $cliente_id);
         }
     }
 
@@ -116,12 +129,11 @@ class SubCategoriaController extends Controller
     public function destroy($id)
     {
         $subCategoria = SubCategoria::findOrFail($id);
-
-
+        $cliente_id = DB::table('sub_categoria')->select('cliente.id as cliente_id')->join('categoria', 'categoria.id', 'sub_categoria.categoria_id')->join('cliente', 'cliente.id', 'categoria.cliente_id')->where('sub_categoria.id', $id)->value('cliente.id');
         if ($subCategoria->delete()) {
-            return redirect()->route('sub_categoria.index');
+            return redirect()->route('cliente.show', $cliente_id);
         }else{
-            return redirect()->route('sub_categoria.index');
+            return redirect()->route('cliente.show', $cliente_id);
         }
     }
 }

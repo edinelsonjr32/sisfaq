@@ -7,6 +7,17 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        @foreach ($cliente as $dado )
+        <a class="navbar-brand pt-2" href="{{ route('site.index', $dado->link_acesso) }}">
+            SisFAQ
+        </a>
+        <a class="navbar-brand pt-3" href="#">
+
+            {{$dado->nomeCliente}}
+
+        </a>
+        <h5 class="text-center">{{$dado->dominio}}</h5>
+        @endforeach
 
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
             <!-- Collapse header -->
@@ -51,6 +62,23 @@
                     </div>
 
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button"
+                        aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-circle-08" style="color: #f4645f;"></i>
+                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Versão') }}</span>
+                    </a>
+                    <div class="collapse show" id="navbar-examples">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    {{ $versaoCliente}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </li>
             </ul>
 
             </ul>
@@ -75,6 +103,35 @@
     </div>
     <div class="container-fluid mt--7">
         <div class="row">
+            <div class="col-xl-12 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-md-12">
+                                @foreach ($cliente as $dado )
+                                <form role="form" method="POST" action="{{ route('site.busca', $dado->link_acesso) }}">
+                                    @endforeach
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">Buscar por
+                                            termo</label>
+                                        <input class="form-control" type="text" placeholder="Insira um termo"
+                                            id="example-text-input" name="termo">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-default btn-lg btn-block">
+                                        Buscar</button>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="row">
             <div class="col">
                 <div class="card shadow">
                     <div class="card-header border-0">
@@ -84,7 +141,6 @@
 
                         </div>
                     </div>
-
                     <div class="card-body">
                         <div class="container">
                             <div class="row">
@@ -92,7 +148,6 @@
                                 <div class="col-sm">
                                     <div class="card">
                                         <div class="card-body">
-
                                             <div class="row">
                                                 <div class="col">
                                                     <h3 class="card-title text-uppercase text-muted mb-0">
@@ -108,29 +163,16 @@
                                             </div>
                                             <a href="{{route('site.categoria', [$codigo, $dado->id])}}"
                                                 class="btn btn-primary col-6">Acessar</a>
-
-
                                         </div>
-
                                     </div>
                                 </div>
-
-
                                 @endforeach
-
-
                             </div>
                         </div>
 
 
                     </div>
 
-
-                    <div class="card-footer py-4">
-                        <nav class="d-flex justify-content-end" aria-label="...">
-
-                        </nav>
-                    </div>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-3" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/logo_cod3cafe.png" class="navbar-brand-img" " alt="Logo Cod3 Café">
+            SisFaq
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">

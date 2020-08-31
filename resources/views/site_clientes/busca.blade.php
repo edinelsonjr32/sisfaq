@@ -6,8 +6,12 @@
             aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         @foreach ($cliente as $dado )
-        <a class="navbar-brand pt-3" href="{{ route('site.index', $dado->link_acesso) }}">
+        <a class="navbar-brand pt-2" href="{{ route('site.index', $dado->link_acesso) }}">
+            SisFAQ
+        </a>
+        <a class="navbar-brand pt-3" href="#">
 
             {{$dado->nomeCliente}}
 
@@ -81,6 +85,7 @@
         </div>
     </div>
 </nav>
+
 <div class="main-content">
 
     <div class="header bg-success pb-8 pt-5 pt-md-8">
@@ -97,42 +102,42 @@
         </div>
     </div>
     <div class="container-fluid mt--7">
-         <div class="row">
-             <div class="col-xl-12 order-xl-1">
-                 <div class="card bg-secondary shadow">
-                     <div class="card-header bg-white border-0">
-                         <div class="row align-items-center">
-                             <div class="col-md-12">
-                                 @foreach ($cliente as $dado )
-                                 <form role="form" method="POST" action="{{ route('site.busca', $dado->link_acesso) }}">
-                                     @endforeach
-                                     @csrf
-                                     <div class="form-group">
-                                         <label for="example-text-input" class="form-control-label">Buscar por
-                                             termo</label>
-                                         <input class="form-control" type="text" placeholder="Insira um termo"
-                                             id="example-text-input" name="termo">
-                                     </div>
+        <div class="row">
+            <div class="col-xl-12 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-md-12">
+                                @foreach ($cliente as $dado )
+                                <form role="form" method="POST" action="{{ route('site.busca', $dado->link_acesso) }}">
+                                    @endforeach
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">Buscar por
+                                            termo</label>
+                                        <input class="form-control" type="text" placeholder="Insira um termo"
+                                            id="example-text-input" name="termo">
+                                    </div>
 
-                                     <button type="submit" class="btn btn-default btn-lg btn-block">
-                                         Buscar</button>
+                                    <button type="submit" class="btn btn-default btn-lg btn-block">
+                                        Buscar</button>
 
-                                 </form>
-                             </div>
+                                </form>
+                            </div>
 
-                         </div>
-                     </div>
-                 </div>
-                 <br>
-             </div>
-         </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{$nomeCategoria}}</h3>
+                                <h1 class="mb-0">Resultado Busca do termo: "{{$termo}}"</h1>
                             </div>
 
                         </div>
@@ -141,16 +146,16 @@
                     <div class="card-body">
                         <div class="container">
                             <div class="row">
-                                @foreach ($sub_categorias as $dado)
+                                @foreach ($dadosBuscados as $dado)
                                 <div class="col-sm">
                                     <div class="card">
                                         <div class="card-body">
-
                                             <div class="row">
                                                 <div class="col">
-                                                    <h3 class="card-title text-uppercase text-muted mb-0">{{$dado->nome}}</h3>
+                                                    <h3 class="card-title text-uppercase text-muted mb-0">
+                                                        {{$dado->nome}}</h3>
                                                     <span type="button" class="badge badge-default">
-                                                        <span>{{$nomeCategoria}}</span>
+                                                        <span>{{$dado->nomeCategoria}}</span>
                                                     </span>
                                                 </div>
                                                 <div class="col-auto">
@@ -162,8 +167,6 @@
                                             </div>
                                             <a href="{{route('site.sub_categoria', [$codigo, $dado->id])}}"
                                                 class="btn btn-primary col-6">Acessar</a>
-
-
                                         </div>
 
                                     </div>

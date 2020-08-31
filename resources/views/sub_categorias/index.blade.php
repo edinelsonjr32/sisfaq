@@ -37,14 +37,16 @@
 
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Cadastro de Sub Categoria</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Cadastro de Sub Categoria
+                                            </h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">
-                                            <form role="form" method="POST" action="{{ route('sub_categoria.store') }}">
-                                                @csrf
+                                        <form role="form" method="POST" action="{{ route('sub_categoria.store') }}">
+                                            @csrf
+                                            <div class="modal-body">
+
                                                 <div class="pl-lg-4">
                                                     <div
                                                         class="form-group{{ $errors->has('nome') ? ' has-danger' : '' }}">
@@ -56,8 +58,7 @@
                                                         <input type="text" name="nome" id="nome"
                                                             class="form-control
                                                             form-control-alternative{{ $errors->has('nome') ? ' is-invalid' : '' }}"
-                                                            placeholder="{{ __('Digite o nome') }}" value=""
-                                                            required>
+                                                            placeholder="{{ __('Digite o nome') }}" value="" required>
 
                                                         @if ($errors->has('nome'))
                                                         <span class="invalid-feedback" role="alert">
@@ -69,9 +70,10 @@
                                                         <div class="text-left">
                                                             <label for="exampleFormControlSelect1">Categoria</label>
                                                         </div>
-                                                        <select class="form-control" id="exampleFormControlSelect1" name="categoria_id">
+                                                        <select class="form-control" id="exampleFormControlSelect1"
+                                                            name="categoria_id">
                                                             @foreach ($categorias as $dado)
-                                                                <option value="{{$dado->id}}">{{$dado->nome}}</option>
+                                                            <option value="{{$dado->id}}">{{$dado->nome}}</option>
                                                             @endforeach
 
                                                         </select>
@@ -80,12 +82,12 @@
 
 
                                                 </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Sair</button>
-                                            <button type="submit" class="btn btn-primary">Salvar</button>
-                                        </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Sair</button>
+                                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -107,26 +109,26 @@
                         <tbody>
                             @if ($sub_categorias == '')
                             @else
-                                @foreach ($sub_categorias as $dado)
-                                <tr>
-                                    <td>{{$dado->nome}}</td>
-                                    <td>{{$dado->nomeCategoria}}</td>
-                                    <td class="text-right">
-                                        <form action="{{ route('sub_categoria.destroy', $dado->id) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <a type="button" href="{{route('sub_categoria.edit', $dado->id)}}"
-                                                class="btn btn-sm btn-warning">
-                                                <i class="ni ni-settings"></i>
-                                            </a>
-                                            <button type="button" href="#" class="btn btn-sm bg-danger text-white"
-                                                onclick="confirm('{{ __("Você tem certeza que deseja excluir?") }}') ? this.parentElement.submit() : ''">
-                                                <i class="fa fa-trash "></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
+                            @foreach ($sub_categorias as $dado)
+                            <tr>
+                                <td>{{$dado->nome}}</td>
+                                <td>{{$dado->nomeCategoria}}</td>
+                                <td class="text-right">
+                                    <form action="{{ route('sub_categoria.destroy', $dado->id) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <a type="button" href="{{route('sub_categoria.edit', $dado->id)}}"
+                                            class="btn btn-sm btn-warning">
+                                            <i class="ni ni-settings"></i>
+                                        </a>
+                                        <button type="button" href="#" class="btn btn-sm bg-danger text-white"
+                                            onclick="confirm('{{ __("Você tem certeza que deseja excluir?") }}') ? this.parentElement.submit() : ''">
+                                            <i class="fa fa-trash "></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
                             @endif
 
 

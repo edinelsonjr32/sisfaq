@@ -130,14 +130,7 @@
                                                 class="btn btn-sm btn-default">
                                                 Show
                                             </a>
-                                            <!--<a type="button" href="{{route('tutorial.edit', $dado->id)}}"
-                                                class="btn btn-sm btn-warning">
-                                                edit
-                                            </a>
-                                            <button type="button" href="#" class="btn btn-sm bg-danger text-white"
-                                                onclick="confirm('{{ __("Você tem certeza que deseja excluir?") }}') ? this.parentElement.submit() : ''">
-                                                <i class="fa fa-trash "></i>
-                                            </button>-->
+                                            
                                         </form>
                                     </td>
                                 </tr>
