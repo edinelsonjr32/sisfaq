@@ -46,7 +46,7 @@
                                 <label for="exampleFormControlSelect1">Sub Categoria</label>
                             </div>
                             <div class="row">
-                                <div class="col-12 col-md-11">
+                                <div class="col-12 col-md-12">
                                     <select class="form-control" id="exampleFormControlSelect1" name="sub_categoria_id">
                                         @foreach ($sub_categoria as $item)
 
@@ -57,11 +57,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-2 col-md-1">
-                                    <a type="button" href="{{route('sub_categoria.index')}}"
-                                        class="btn btn-danger col-md-12 text-center text-white" data-toggle="modal"
-                                        data-target="#sub_categorias">Adicionar</a>
-                                </div>
+
 
                             </div>
 
