@@ -153,20 +153,17 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <h3 class="card-title text-uppercase text-muted mb-0">
-                                                        {{$dado->nome}}</h3>
+                                                        {{$dado->titulo}}</h3>
                                                     <span type="button" class="badge badge-default">
-                                                        <span>{{$dado->nomeCategoria}}</span>
+                                                        <span>{{$dado->nomeSubCategoria}}</span>
                                                     </span>
                                                 </div>
-                                                <div class="col-auto">
-                                                    <div
-                                                        class="icon icon-shape bg-blue text-white rounded-circle shadow">
-                                                        <i class="ni ni-book-bookmark"></i>
-                                                    </div>
+                                                <div class="col-6">
+                                                    <a href="{{route('site.sub_categoria', [$codigo, $dado->sub_categoria_id])}}"
+                                                        class="btn btn-primary col-6">Acessar</a>
                                                 </div>
                                             </div>
-                                            <a href="{{route('site.sub_categoria', [$codigo, $dado->id])}}"
-                                                class="btn btn-primary col-6">Acessar</a>
+
                                         </div>
 
                                     </div>

@@ -32,8 +32,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('sub_categoria', 'SubCategoriaController');
     Route::resource('tutorial', 'TutorialController');
     Route::post('tutorial/primeiraParte', 'TutorialController@primeiraParte')->name('tutorial.primeira_parte');
+    Route::post('tutorial/primeiraParte/adicionando/sub_categoria', 'TutorialController@primeiraParteSubCategoria')->name('tutorial.primeira_parte.subcategoria');
+    Route::get('tutorial/excluir/{id}', 'TutorialController@excluir')->name('tutorial.excluir');
 });
 
+Route::post('ckeditor/image_upload', 'TutorialController@upload')->name('upload');
 Route::get('site/{codigo}/index', 'SiteClienteController@index')->name('site.index');
 Route::get('site/{codigo}/categoria/{id}', 'SiteClienteController@categoria')->name('site.categoria');
 Route::get('site/{codigo}/sub_categoria/{id}', 'SiteClienteController@subCategoria')->name('site.sub_categoria');

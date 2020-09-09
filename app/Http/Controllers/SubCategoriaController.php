@@ -66,12 +66,13 @@ class SubCategoriaController extends Controller
     {
 
         $subCategoria = SubCategoria::findOrFail($id);
-        
-        $tutorial = DB::table('tutorial')->select('tutorial.*', 'sub_categoria.nome as nomeSubCategoria', 'categoria.nome as nomeCategoria', 'cliente.nome as nomeCliente' , 'cliente.id as cliente_id')->join('sub_categoria', 'sub_categoria.id', '=', 'tutorial.sub_categoria_id')->join('categoria', 'categoria.id', '=', 'sub_categoria.categoria_id')->join('cliente', 'cliente.id', '=', 'tutorial.cliente_id')->where('sub_categoria.id', '=', $id)->get();
 
 
-        $cliente_id = DB::table('tutorial')->select('cliente.id as cliente_id')->join('sub_categoria', 'sub_categoria.id', '=', 'tutorial.sub_categoria_id')->join('categoria', 'categoria.id', '=', 'sub_categoria.categoria_id')->join('cliente', 'cliente.id', '=', 'tutorial.cliente_id')->where('sub_categoria.id', '=', $id)->value('cliente.id');
 
+        $tutorial = DB::table('tutorial')->select('tutorial.*', 'sub_categoria.nome as nomeSubCategoria', 'categoria.nome as nomeCategoria', 'cliente.nome as nomeCliente' , 'cliente.id as cliente_id')->join('sub_categoria', 'sub_categoria.id', '=', 'tutorial.sub_categoria_id')->join('categoria', 'categoria.id', '=', 'sub_categoria.categoria_id')->join('cliente', 'cliente.id', '=', 'tutorial.cliente_id')->where('tutorial.deleted_at', '=', null)->where('sub_categoria.id', '=', $id)->get();
+
+
+        $cliente_id = DB::table('sub_categoria')->select('cliente.id as cliente_id')->join('categoria', 'categoria.id','=','sub_categoria.categoria_id')->join('cliente','cliente.id', '=', 'categoria.cliente_id')->where('sub_categoria.id', '=', $id)->value('cliente.id');
 
         return view('tutoriais.show', compact('subCategoria', 'tutorial', 'cliente_id'));
 

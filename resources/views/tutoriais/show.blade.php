@@ -35,7 +35,6 @@
     </div>
     @foreach ($tutorial as $dado )
     <div class="row">
-
         <div class="col-xl-12 order-xl-1">
             <div class="card bg-secondary shadow">
                 <div class="card-profile-image">
@@ -46,18 +45,31 @@
                 </div>
                 <div class="card-body card-primary">
                     <div class="container">
-                        <h1 class="card-title text-center">{{$dado->titulo}}</h1>
-                        <h2 class="card-title text-center">
+                        <div class="row">
+                            <div class="col-md-8 col-sm-12">
+                                <h1 class="card-title text-left">{{$dado->titulo}}</h1>
+                            </div>
+                            <div class="col-md-2 col-sm-12">
+                                <a type="button" href="{{route('tutorial.edit', $dado->id)}}"
+                                    class="btn btn-block btn-default  text-white col-12 ">Editar</a>
+                            </div>
+                            <div class="col-md-2 col-sm-12">
+                                <a type="button" href="{{route('tutorial.excluir', $dado->id)}}"
+                                    class="btn btn-block btn-danger  text-white col-12 ">Excluir</a>
+                            </div>
+                        </div>
 
-                            <h2 class="card-title text-center">Passo: {{$dado->passo_numero}}</h2>
+
+                        <h2 class="card-title text-center">
+                            <h2 class="card-title text-left">Passo: {{$dado->passo_numero}}</h2>
 
                             <img src="{{ URL::to('/') }}/images/{{ $dado->path_foto}}" alt="" style="max-width: 100%;">
-                            <p class="card-text" width="20%" style="text-align: justify">
+                            <p class="card-text col-12 col-sm-12 col-md-12" style="text-align: justify">
                                 <?php print_r($dado->observacao)?>
                             </p>
                             <div class="col-md-auto">
                                 <div class="row">
-                                    <div class="col-md-auto">
+                                    <div class="col-12">
                                         <?php print_r($dado->link_video)?>
                                     </div>
                                 </div>

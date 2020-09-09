@@ -19,12 +19,12 @@
             <!-- Collapse header -->
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
-                    <div class="col-6 collapse-brand">
+                    <div class="col-md-6 col-sm-12 collapse-brand">
                         <a href="{{ route('home') }}">
 
                         </a>
                     </div>
-                    <div class="col-6 collapse-close">
+                    <div class="col-md-6 col-sm-12 collapse-close">
                         <button type="button" class="navbar-toggler" data-toggle="collapse"
                             data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false"
                             aria-label="Toggle sidenav">
@@ -96,6 +96,7 @@
             @endif
 
         </div>
+
     </div>
     <div class="container-fluid mt--7">
          <div class="row">
@@ -127,76 +128,74 @@
                  <br>
              </div>
          </div>
-        <div class="row">
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-header border-0">
-                        <div class="row align-items-center">
-                            <div class="col-8">
-                                <h3 class="mb-0">{{$nomeCategoria}} / {{$nomeSubCategoria}}</h3>
-                            </div>
-                            <div class="col-4 text-right">
-                                <!-- Button trigger modal -->
-                                <a type="button" href="{{route('site.categoria', [$codigo, $id])}}"
-                                    class="btn btn-primary">
-                                    Voltar para Categoria
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body card-primary">
-                        <div class="container">
-                            <div class="row justify-content-md-center">
-                                @foreach ($sub_categorias as $dado )
-
-                                <div class="col-8">
-                                    <div class="card">
-
-                                        <div class="card-profile-image">
-                                            <a href="#">
-                                                <img src="http://localhost:8000/argon/img/theme/paper2.png"
-                                                    class="rounded-circle" width="60px">
-                                            </a>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <div class="card-body">
-
-                                            <h1 class="card-title text-center">{{$dado->titulo}}</h1>
-                                            <h2 class="card-title text-center">
-
-                                                <h2 class="card-title text-center">Passo: {{$dado->passo_numero}}</h2>
-
-                                                <img src="{{ URL::to('/') }}/images/{{ $dado->path_foto}}" alt=""
-                                                    style="max-width: 100%;">
-                                                <p class="card-text" width="20%" style="text-align: justify">
-                                                    <?php print_r($dado->observacao)?>
-                                                </p>
-                                                <div class="col-md-auto">
-                                                    <div class="row">
-                                                        <div class="col-md-auto">
-                                                            <?php print_r($dado->link_video)?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <br>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
 
 
-                    </div>
+
+         <div class="card-header border-0">
+             <div class="row align-items-center">
+                 <div class="col-md-8 col-sm-12">
+                     <h3 class="mb-0">{{$nomeCategoria}} / {{$nomeSubCategoria}}</h3>
+                 </div>
+                 <div class="col-md-4 col-sm-12 text-right">
+                     <!-- Button trigger modal -->
+                     <a type="button" href="{{route('site.categoria', [$codigo, $id])}}" class="btn btn-primary">
+                         Voltar para Categoria
+                     </a>
+                 </div>
+
+             </div>
+         </div>
+         <br>
+         @foreach ($sub_categorias as $dado )
+
+         <div class="row">
+             <div class="col-xl-12 order-xl-1">
+                 <div class="card bg-secondary shadow">
+                     <div class="card-profile-image">
+                         <a href="#">
+                             <img src="http://localhost:8000/argon/img/theme/paper2.png" class="rounded-circle"
+                                 width="60px">
+                         </a>
+                         <br>
+                     </div>
+
+                     <div class="card-body card-primary">
+                         <div class="container">
+                             <div class="row">
+                                 <div class="col-md-12 col-sm-12">
+                                     <h1 class="card-title text-center">{{$dado->titulo}}</h1>
+                                 </div>
+
+                             </div>
 
 
-                </div>
-            </div>
-        </div>
+                             <h2 class="card-title text-center">
+                                 <h2 class="card-title text-center">Passo: {{$dado->passo_numero}}
+                                 </h2>
+
+                                 <img src="{{ URL::to('/') }}/images/{{ $dado->path_foto}}" alt=""
+                                     style="max-width: 100%;">
+                                 <p class="card-text col-12 col-sm-12 col-md-12" style="text-align: justify">
+                                     <?php print_r($dado->observacao)?>
+                                 </p>
+                                 <div class="col-md-auto">
+                                     <div class="row">
+                                         <div class="col-12">
+                                             <?php print_r($dado->link_video)?>
+                                         </div>
+                                     </div>
+                                 </div>
+
+                         </div>
+                     </div>
+                 </div>
+                 <br>
+                 <br>
+             </div>
+
+
+         </div>
+         @endforeach
     </div>
 </div>
 

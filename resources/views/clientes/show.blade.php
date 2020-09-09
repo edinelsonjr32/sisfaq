@@ -188,7 +188,7 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col" class="sort" data-sort="name">Nome</th>
-                                        <th scope="col" class="sort" data-sort="budget">Status</th>
+                                        <th scope="col" class="sort" data-sort="budget">Qtd Sub Categorias</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -202,7 +202,12 @@
                                             </div>
                                         </th>
                                         <td class="budget">
-                                            <a href="#" class="badge badge-pill badge-success">Ativado</a>
+                                            <?php
+                                                    $contadorSubCategorias = DB::table('sub_categoria')->select('sub_categoria.id')->where('sub_categoria.categoria_id', '=', $item->id)->count();
+                                                    ?>
+                                            <a href="#" class="badge badge-pill badge-success">
+                                                    {{$contadorSubCategorias}}
+                                            </a>
                                         </td>
                                         <td class="text-right">
                                             <form action="{{ route('categoria.destroy', $item->id) }}" method="post">
@@ -317,7 +322,7 @@
                                     <tr>
                                         <th scope="col" class="sort" data-sort="name">Nome</th>
                                         <th scope="col" class="sort" data-sort="name">Categoria</th>
-                                        <th scope="col" class="sort" data-sort="budget">Status</th>
+                                        <th scope="col" class="sort" data-sort="budget">Qtd Tutoriais</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -335,7 +340,13 @@
                                             </div>
                                         </th>
                                         <td class="budget">
-                                            <a href="#" class="badge badge-pill badge-success">Ativado</a>
+
+                                            <?php
+                                                    $contadorTutoriais = DB::table('tutorial')->select('tutorial.id')->where('tutorial.sub_categoria_id', '=', $item->id)->count();
+                                                    ?>
+                                            <a href="#" class="badge badge-pill badge-success">
+                                                {{$contadorTutoriais}}
+                                            </a>
                                         </td>
                                         <td class="text-right">
                                             <form action="{{ route('sub_categoria.destroy', $item->id) }}"
@@ -360,9 +371,6 @@
                                         </td>
                                     </tr>
                                     @endforeach
-
-
-
                                 </tbody>
                             </table>
                         </div>
@@ -372,7 +380,6 @@
             </div>
         </div>
     </div>
-
     @include('layouts.footers.auth')
 </div>
 @endsection

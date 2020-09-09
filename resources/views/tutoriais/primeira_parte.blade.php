@@ -25,8 +25,8 @@
                         </div>
                         <div class="col-4 text-right">
                             <!-- Button trigger modal -->
-                            <a type="button" href="{{route('sub_categoria.index')}}" class="btn btn-primary">
-                                Voltar para Gerenciamento de Sub Categoria
+                            <a type="button" href="{{route('cliente.show', $cliente->id)}}" class="btn btn-primary">
+                                Voltar para Cliente
                             </a>
                         </div>
                     </div>
@@ -40,52 +40,63 @@
 
                         <input type="hidden" name="cliente_id" value="{{$cliente->id}}">
 
-                                <div class="form-group{{ $errors->has('cliente') ? ' has-danger' : '' }}">
-                                    <div class="text-left">
-                                        <label class="form-control-label"
-                                            for="input-current-nome">{{ __('Cliente') }}</label>
-                                    </div>
-                                    <input type="text"
-                                        class="form-control
+                        <div class="form-group{{ $errors->has('cliente') ? ' has-danger' : '' }}">
+                            <div class="text-left">
+                                <label class="form-control-label" for="input-current-nome">{{ __('Cliente') }}</label>
+                            </div>
+                            <input type="text"
+                                class="form-control
                                                             form-control-alternative{{ $errors->has('nome') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Digite o nome') }}" value="{{$cliente->nome}}" disabled>
+                                placeholder="{{ __('Digite o nome') }}" value="{{$cliente->nome}}" disabled>
 
-                                    @if ($errors->has('nome'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('nome') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group{{ $errors->has('cliente') ? ' has-danger' : '' }}">
-                                    <div class="text-left">
-                                        <label class="form-control-label"
-                                            for="input-current-nome">{{ __('Categoria') }}</label>
-                                    </div>
-                                    <input type="text"
-                                        class="form-control
+                            @if ($errors->has('nome'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('nome') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                        <div class="form-group{{ $errors->has('cliente') ? ' has-danger' : '' }}">
+                            <div class="text-left">
+                                <label class="form-control-label" for="input-current-nome">{{ __('Categoria') }}</label>
+                            </div>
+                            <input type="text"
+                                class="form-control
                                                             form-control-alternative{{ $errors->has('nome') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Digite o nome') }}" value="{{$categoria->nome}}" disabled>
+                                placeholder="{{ __('Digite o nome') }}" value="{{$categoria->nome}}" disabled>
 
-                                    @if ($errors->has('nome'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('nome') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                            @if ($errors->has('nome'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('nome') }}</strong>
+                            </span>
+                            @endif
+                        </div>
 
 
                         <div class="form-group">
                             <div class="text-left">
                                 <label for="exampleFormControlSelect1">Sub Categoria</label>
                             </div>
-                            <select class="form-control" id="exampleFormControlSelect1" name="sub_categoria_id">
-                                @foreach ($sub_categoria as $item)
-                                <option value="{{$item->id}}">
-                                    {{$item->nome}}</option>
-                                @endforeach
+                            <div class="row">
+                                <div class="col-12 col-md-11">
+                                    <select class="form-control" id="exampleFormControlSelect1" name="sub_categoria_id">
+                                        @foreach ($sub_categoria as $item)
+                                        <option value="{{$item->id}}">
+                                            {{$item->nome}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-2 col-md-1">
+                                    <a type="button" href="{{route('sub_categoria.index')}}"
+                                        class="btn btn-danger col-md-12 text-center text-white" data-toggle="modal"
+                                        data-target="#sub_categorias">Adicionar</a>
+                                </div>
 
-                            </select>
+                            </div>
+
                         </div>
+                        <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+
+
                         <div class="form-group{{ $errors->has('titulo') ? ' has-danger' : '' }}">
                             <div class="text-left">
                                 <label class="form-control-label" for="input-current-titulo">{{ __('Titulo') }}</label>
@@ -103,12 +114,13 @@
                         </div>
                         <div class="form-group{{ $errors->has('passo_numero') ? ' has-danger' : '' }}">
                             <div class="text-left">
-                                <label class="form-control-label" for="input-current-titulo">{{ __('Passo Nº') }}</label>
+                                <label class="form-control-label"
+                                    for="input-current-titulo">{{ __('Passo Nº') }}</label>
                             </div>
                             <input type="text" name="passo_numero" id="passo_numero"
                                 class="form-control
                                                             form-control-alternative{{ $errors->has('passo_numero') ? ' is-invalid' : '' }}"
-                                placeholder="{{ __('Digite o titulo') }}" >
+                                placeholder="{{ __('Digite o titulo') }}">
 
                             @if ($errors->has('passo_numero'))
                             <span class="invalid-feedback" role="alert">
@@ -116,18 +128,11 @@
                             </span>
                             @endif
                         </div>
-                        <div class="form-group{{ $errors->has('foto') ? ' has-danger' : '' }}">
-                            <div class="text-left">
-                                <label class="form-control-label" for="input-current-nome">{{ __('Foto') }}</label>
-                            </div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFileLang" lang="en" name="path_foto">
-                                <label class="custom-file-label" for="customFileLang">Selecione o Arquivo (Opcional)</label>
-                            </div>
-                        </div>
+
                         <div class="form-group{{ $errors->has('link_video') ? ' has-danger' : '' }}">
                             <div class="text-left">
-                                <label class="form-control-label" for="input-current-titulo">{{ __('Iframe Vídeo Youtube') }}</label>
+                                <label class="form-control-label"
+                                    for="input-current-titulo">{{ __('Iframe Vídeo Youtube') }}</label>
                             </div>
                             <input type="text" name="link_video" id="link_video"
                                 class="form-control
@@ -141,10 +146,11 @@
                             @endif
                         </div>
                         <div class="form-group">
-                             <div class="text-left">
-                                 <label class="form-control-label" for="input-current-nome">{{ __('Observação') }}</label>
-                             </div>
-                            <textarea class="form-control ckeditor" id="exampleFormControlTextarea1" rows="3"
+                            <div class="text-left">
+                                <label class="form-control-label"
+                                    for="input-current-nome">{{ __('Observação') }}</label>
+                            </div>
+                            <textarea class="form-control" id="summary-ckeditor" name="observacao" rows="3"
                                 name="observacao"></textarea>
                         </div>
 
@@ -162,6 +168,58 @@
                     </div>
 
                 </form>
+
+                <div class="modal fade" id="sub_categorias" tabindex="-1" role="dialog" aria-labelledby="modal-default"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6 class="modal-title" id="modal-title-default">Adicione uma nova Sub -
+                                    categoria
+                                </h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+
+                            <form role="form" method="POST"
+                                action="{{ route('tutorial.primeira_parte.subcategoria') }}">
+                                @csrf
+                                <div class="modal-body">
+                                    <input type="hidden" name="categoria_id" value="{{ $categoria_id}}">
+                                    <input type="hidden" name="nome" value="{{ $nome}}">
+                                    <input type="hidden" name="cliente_id" value="{{ $cliente_id}}">
+
+                                    <div class="pl-lg-4">
+                                        <div class="form-group{{ $errors->has('nome') ? ' has-danger' : '' }}">
+                                            <div class="text-left">
+                                                <label class="form-control-label"
+                                                    for="input-current-nome">{{ __('Nome') }}</label>
+                                            </div>
+
+                                            <input type="text" name="nomeSubCategoria" id="nomeSubCategoria"
+                                                class="form-control
+                                                            form-control-alternative{{ $errors->has('nome') ? ' is-invalid' : '' }}"
+                                                placeholder="{{ __('Digite o nome') }}" value="" required>
+
+                                            @if ($errors->has('nomeSubCategoria'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('nome') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -173,9 +231,10 @@
 @push('js')
 
 <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.ckeditor').ckeditor();
+<script>
+    CKEDITOR.replace('summary-ckeditor', {
+        filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+        filebrowserUploadMethod: 'form',
     });
 </script>
 @endpush

@@ -60,7 +60,8 @@ class SiteClienteController extends Controller
         $termo = $request->termo;
 
 
-        $dadosBuscados = DB::table('sub_categoria')->select('sub_categoria.*', 'categoria.nome as nomeCategoria')->join('categoria', 'categoria.id', '=', 'sub_categoria.categoria_id')->join('cliente', 'cliente.id', 'categoria.cliente_id')->where('sub_categoria.nome', 'LIKE', "%{$termo}%")->where('cliente.link_acesso', '=', $link_acesso)->where('sub_categoria.deleted_at', '=', null)->get();
+
+        $dadosBuscados = DB::table('tutorial')->select('tutorial.*', 'sub_categoria.nome as nomeSubCategoria')->join('sub_categoria', 'sub_categoria.id', '=', 'tutorial.sub_categoria_id')->join('categoria', 'categoria.id', '=', 'sub_categoria.categoria_id')->join('cliente', 'cliente.id', 'categoria.cliente_id')->where('tutorial.titulo', 'LIKE', "%{$termo}%")->where('cliente.link_acesso', '=', $link_acesso)->where('sub_categoria.deleted_at', '=', null)->get();
 
         $categorias = DB::table('categoria')->select('categoria.nome', 'categoria.id')->where('deleted_at', '=', null)->get();
 
