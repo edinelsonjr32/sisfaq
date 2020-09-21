@@ -32,14 +32,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('sub_categoria', 'SubCategoriaController');
     Route::resource('tutorial', 'TutorialController');
     Route::post('tutorial/primeiraParte', 'TutorialController@primeiraParte')->name('tutorial.primeira_parte');
-    Route::post('tutorial/primeiraParte/adicionando/sub_categoria', 'TutorialController@primeiraParteSubCategoria')->name('tutorial.primeira_parte.subcategoria');
+    Route::post('tutorial/primeira_Parte/adicionando/sub_categoria', 'TutorialController@primeiraParteSubCategoria')->name('tutorial.primeira_parte.subcategoria');
+    Route::post('tutorial/segunda_parte/adicionando/sub_categoria', 'TutorialController@segundaParteSubCategoria')->name('tutorial.segunda_parte.subcategoria');
     Route::get('tutorial/excluir/{id}', 'TutorialController@excluir')->name('tutorial.excluir');
+    Route::get('tutorial/editar/dados/{id}', 'TutorialController@edit2')->name('tutorial.editar.dois');
+    Route::resource('item_tutorial', 'ItemTutorialController');
+
 });
 
 Route::post('ckeditor/image_upload', 'TutorialController@upload')->name('upload');
 Route::get('site/{codigo}/index', 'SiteClienteController@index')->name('site.index');
 Route::get('site/{codigo}/categoria/{id}', 'SiteClienteController@categoria')->name('site.categoria');
 Route::get('site/{codigo}/sub_categoria/{id}', 'SiteClienteController@subCategoria')->name('site.sub_categoria');
+Route::get('site/{codigo}/tutorial/{id}', 'SiteClienteController@tutorial')->name('site.tutorial');
 
 Route::post('/site/{link_acesso}/busca/', 'SiteClienteController@busca')->name('site.busca');
 

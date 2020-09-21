@@ -13,7 +13,7 @@
 
         </a>
         <h5 class="text-center">{{$dado->dominio}}</h5>
-        @endforeach
+
 
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
             <!-- Collapse header -->
@@ -146,56 +146,57 @@
              </div>
          </div>
          <br>
-         @foreach ($sub_categorias as $dado )
 
          <div class="row">
-             <div class="col-xl-12 order-xl-1">
-                 <div class="card bg-secondary shadow">
-                     <div class="card-profile-image">
-                         <a href="#">
-                             <img src="http://localhost:8000/argon/img/theme/paper2.png" class="rounded-circle"
-                                 width="60px">
-                         </a>
-                         <br>
-                     </div>
-
-                     <div class="card-body card-primary">
+             <div class="col">
+                 <div class="card shadow">
+                     <div class="card-body">
                          <div class="container">
                              <div class="row">
-                                 <div class="col-md-12 col-sm-12">
-                                     <h1 class="card-title text-center">{{$dado->titulo}}</h1>
-                                 </div>
+                                 @foreach ($sub_categorias as $item)
+                                 <div class="col-sm">
+                                     <div class="card">
+                                         <div class="card-body">
+                                             <img class="card-img-top"
+                                                 src="{{ URL::to('/') }}/images/{{ $item->path_foto}}"
+                                                 alt="Card image cap" height="450px">
+                                             <div class="card-body">
+                                                 <h5 class="card-title">{{$item->titulo}}</h5>
+                                                 <p class="card-text">{{substr($item->observacao, 0, 30)}} ...</p>
 
-                             </div>
+
+                                                 <div class="row align-items-center">
+                                                     <div class="col-md-4">
+                                                         <a href="{{route('site.tutorial', [$dado->link_acesso , $item->idTutorial])}}"
+                                                             class="btn btn-block btn-primary mb-3 text-white">Acessar
+                                                             <i class="ni ni-active-40"></i></a>
+                                                     </div>
+                                                 </div>
 
 
-                             <h2 class="card-title text-center">
-                                 <h2 class="card-title text-center">Passo: {{$dado->passo_numero}}
-                                 </h2>
 
-                                 <img src="{{ URL::to('/') }}/images/{{ $dado->path_foto}}" alt=""
-                                     style="max-width: 100%;">
-                                 <p class="card-text col-12 col-sm-12 col-md-12" style="text-align: justify">
-                                     <?php print_r($dado->observacao)?>
-                                 </p>
-                                 <div class="col-md-auto">
-                                     <div class="row">
-                                         <div class="col-12">
-                                             <?php print_r($dado->link_video)?>
+                                             </div>
                                          </div>
                                      </div>
                                  </div>
-
+                                 @endforeach
+                             </div>
                          </div>
+
+
+                         @endforeach
+
+                     </div>
+                     <div class="card-footer py-4">
+                         <nav class="d-flex justify-content-end" aria-label="...">
+
+                         </nav>
                      </div>
                  </div>
-                 <br>
-                 <br>
              </div>
-
-
          </div>
-         @endforeach
+
+
     </div>
 </div>
 

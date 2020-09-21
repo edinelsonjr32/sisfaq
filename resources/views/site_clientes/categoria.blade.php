@@ -95,38 +95,38 @@
             @endif
 
         </div>
-        
+
     </div>
     <div class="container-fluid mt--7">
-         <div class="row">
-             <div class="col-xl-12 order-xl-1">
-                 <div class="card bg-secondary shadow">
-                     <div class="card-header bg-white border-0">
-                         <div class="row align-items-center">
-                             <div class="col-md-12">
-                                 @foreach ($cliente as $dado )
-                                 <form role="form" method="POST" action="{{ route('site.busca', $dado->link_acesso) }}">
-                                     @endforeach
-                                     @csrf
-                                     <div class="form-group">
-                                         <label for="example-text-input" class="form-control-label">Buscar por
-                                             termo</label>
-                                         <input class="form-control" type="text" placeholder="Insira um termo"
-                                             id="example-text-input" name="termo">
-                                     </div>
+        <div class="row">
+            <div class="col-xl-12 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-md-12">
+                                @foreach ($cliente as $dado )
+                                <form role="form" method="POST" action="{{ route('site.busca', $dado->link_acesso) }}">
+                                    @endforeach
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">Buscar por
+                                            termo</label>
+                                        <input class="form-control" type="text" placeholder="Insira um termo"
+                                            id="example-text-input" name="termo">
+                                    </div>
 
-                                     <button type="submit" class="btn btn-default btn-lg btn-block">
-                                         Buscar</button>
+                                    <button type="submit" class="btn btn-default btn-lg btn-block">
+                                        Buscar</button>
 
-                                 </form>
-                             </div>
+                                </form>
+                            </div>
 
-                         </div>
-                     </div>
-                 </div>
-                 <br>
-             </div>
-         </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <div class="card shadow">
@@ -141,39 +141,28 @@
 
                     <div class="card-body">
                         <div class="container">
-                            <div class="row">
-                                @foreach ($sub_categorias as $dado)
-                                <div class="col-sm">
-                                    <div class="card">
-                                        <div class="card-body">
 
-                                            <div class="row">
-                                                <div class="col">
-                                                    <h3 class="card-title text-uppercase text-muted mb-0">{{$dado->nome}}</h3>
-                                                    <span type="button" class="badge badge-default">
-                                                        <span>{{$nomeCategoria}}</span>
-                                                    </span>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div
-                                                        class="icon icon-shape bg-blue text-white rounded-circle shadow">
-                                                        <i class="ni ni-book-bookmark"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <a href="{{route('site.sub_categoria', [$codigo, $dado->id])}}"
-                                                class="btn btn-primary col-6">Acessar</a>
-
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-                                @endforeach
-
-
+                            <div class="table-responsive">
+                                <table class="table align-items-center">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th width="85%" class="sort" data-sort="name">Sub Categoria</th>
+                                            <th width="15%">Ação</th>
+                                        </tr>
+                                    <tbody class="list">
+                                        @foreach ($sub_categorias as $dado)
+                                        <tr>
+                                            <td scope="col-11">{{$dado->nome}}</td>
+                                            <td scope="col-1">
+                                                <a href="{{route('site.sub_categoria', [$codigo, $dado->id])}}"
+                                                    class="btn btn-primary col-12 align-left">Acessar <i
+                                                        class="ni ni-active-40"></i></a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
 

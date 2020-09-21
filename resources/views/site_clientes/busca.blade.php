@@ -146,32 +146,39 @@
                     <div class="card-body">
                         <div class="container">
                             <div class="row">
-                                @foreach ($dadosBuscados as $dado)
+
+
+
+                                @foreach ($dadosBuscados as $item)
                                 <div class="col-sm">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <h3 class="card-title text-uppercase text-muted mb-0">
-                                                        {{$dado->titulo}}</h3>
-                                                    <span type="button" class="badge badge-default">
-                                                        <span>{{$dado->nomeSubCategoria}}</span>
-                                                    </span>
+                                            <img class="card-img-top"
+                                                src="{{ URL::to('/') }}/images/{{ $item->path_foto}}"
+                                                alt="Card image cap" height="120px">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{$item->titulo}}</h5>
+                                                <span type="button" class="badge badge-default">
+                                                    <span>{{$item->nomeCategoria}} - {{$item->nomeSubCategoria}}</span>
+                                                </span>
+
+                                                <br>
+                                                <br>
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-12">
+                                                        <a href="{{route('site.tutorial', [$dado->link_acesso , $item->idTutorial])}}"
+                                                            class="btn btn-block btn-primary mb-3 text-white">Acessar
+                                                            <i class="ni ni-active-40"></i></a>
+                                                    </div>
                                                 </div>
-                                                <div class="col-6">
-                                                    <a href="{{route('site.sub_categoria', [$codigo, $dado->sub_categoria_id])}}"
-                                                        class="btn btn-primary col-6">Acessar</a>
-                                                </div>
+
+
+
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
-
-
                                 @endforeach
-
 
                             </div>
                         </div>

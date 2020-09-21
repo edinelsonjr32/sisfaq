@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use App\Cliente;
+use App\ItemTutorial;
 use App\SubCategoria;
 use App\Tutorial;
 use Illuminate\Http\Request;
@@ -74,47 +75,34 @@ class TutorialController extends Controller
 
         return view('tutoriais.primeira_parte', ['titulo' => $titulo, 'categoria' => $categoria, 'categoria_id' => $request->categoria_id, 'cliente_id' => $request->cliente_id, 'nome' => $request->nome, 'cliente' => $cliente, 'sub_categoria' =>  $sub_categoria]);
     }
-    public function store(Request $request, Tutorial $tutorial)
+
+    public function segundaParteSubCategoria(Request $request)
     {
 
+
+        $tutorial = new Tutorial;
         $tutorial->sub_categoria_id = $request->sub_categoria_id;
         $tutorial->cliente_id = $request->cliente_id;
         $tutorial->titulo = $request->titulo;
         $tutorial->status = true;
-        $tutorial->passo_numero = $request->passo_numero;
-        parse_str(parse_url($request->link_video, PHP_URL_QUERY), $array);
-
-        $tutorial->observacao = $request->observacao;
-        if ($request->link_video == null) {
-
-        }else{
-
-
-            $tutorial->link_video = '<iframe width="100%" height="720" src="https://www.youtube.com/embed/' . $array['v'] . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-        }
-
-        $tutorial->path_foto = $request->path_foto;
-        $path_foto = $request->file('path_foto');
-
-        if ($path_foto = $request->file('path_foto')) {
-
-            $files = $request->path_foto;
-            $extensao = $files->getClientOriginalExtension();
-            $imageName = time() . '.' . $extensao;
-            $tutorial->path_foto = $imageName;
-            $request->path_foto->move(public_path('images'), $imageName);
-            if ($tutorial->save() ) {
-                return redirect()->route('sub_categoria.show', $tutorial->sub_categoria_id);
-            }else{
-                return redirect()->route('cliente.show', $tutorial->cliente_id);
-            }
-
+        if ($tutorial->save()) {
+            return redirect()->route('tutorial.show', $tutorial->id);
         } else {
-            if ($tutorial->save()) {
-                return redirect()->route('sub_categoria.show', $tutorial->sub_categoria_id);
-            } else {
-                return redirect()->route('cliente.show', $tutorial->cliente_id);
-            }
+            return redirect()->route('cliente.show', $request->cliente_id);
+        }
+    }
+    public function store(Request $request, Tutorial $tutorial)
+    {
+
+
+        $tutorial->sub_categoria_id = $request->sub_categoria_id;
+        $tutorial->cliente_id = $request->cliente_id;
+        $tutorial->titulo = $request->nome;
+        $tutorial->status = true;
+        if ($tutorial->save()) {
+            return redirect()->route('tutorial.show', $tutorial->id);
+        } else {
+            return redirect()->route('cliente.show', $request->cliente_id);
         }
 
     }
@@ -129,7 +117,9 @@ class TutorialController extends Controller
         $tutorial = DB::table('tutorial')->select('tutorial.*', 'sub_categoria.nome as nomeSubCategoria', 'categoria.nome as nomeCategoria', 'cliente.nome as nomeCliente')->join('sub_categoria', 'sub_categoria.id', '=', 'tutorial.sub_categoria_id')->join('categoria', 'categoria.id', '=', 'sub_categoria.categoria_id')->join('cliente', 'cliente.id', '=', 'tutorial.cliente_id')->where('tutorial.id', '=', $id)->where('tutorial.deleted_at', '=', null)->get();
 
 
-        return view('tutoriais.show', ['tutorial'=>$tutorial]);
+        $itemTutorial = DB::table('item_tutorial')->select('item_tutorial.*')->where('item_tutorial.tutorial_id', '=', $id)->where('item_tutorial.deleted_at', '=', null)->get();
+
+        return view('tutoriais.show', ['tutorial'=>$tutorial, 'itemTutorial'=> $itemTutorial]);
     }
     public function upload(Request $request)
     {
@@ -168,18 +158,15 @@ class TutorialController extends Controller
      */
     public function edit($id)
     {
-        $tutorial = Tutorial::findOrFail($id);
 
-        $subCategoriaId = $tutorial->sub_categoria_id;
-
+        $tutorial = Tutorial::find($id);
 
 
-        $categoria = DB::table('categoria')->select('categoria.id')->join('sub_categoria', 'sub_categoria.categoria_id', 'categoria.id')->where('sub_categoria.id', '=', $id)->value('categoria_id');
+        $subCategorias = DB::table('sub_categoria')->select('sub_categoria.*', 'categoria.nome as nomeCategoria')->join('categoria', 'categoria.id', 'sub_categoria.categoria_id')->where('categoria.cliente_id', '=', $tutorial->cliente_id)->orderBy('categoria.nome', 'ASC')->where('categoria.deleted_at', '=', null)->where('sub_categoria.deleted_at', '=', null)->get();
 
-        $sub_categoria = DB::table('sub_categoria')->select('sub_categoria.*')->where('sub_categoria.categoria_id', '=', $categoria)->get();
-
-        return view('tutoriais.edit', ['sub_categoria'=> $sub_categoria, 'id' => $id, 'subCategoriaId'=> $subCategoriaId, 'tutorial'=>$tutorial]);
+        return view('tutoriais.editar_dois', ['tutorial' => $tutorial, 'subCategorias' => $subCategorias]);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -190,27 +177,19 @@ class TutorialController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $tutorial = Tutorial::findOrFail($id);
-
-        $tutorial->update($request->all());
-
-        $idSubCategoria = $tutorial->sub_categoria_id;
-
-        parse_str(parse_url($request->link_video, PHP_URL_QUERY), $array);
-
-        $tutorial->observacao = $request->observacao;
-        if ($request->link_video == null) {
-
-        }else{
 
 
-            $tutorial->link_video = '<iframe width="100%" height="720" src="https://www.youtube.com/embed/' . $array['v'] . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+
+            $tutorial = Tutorial::findOrFail($id);
+
+            $tutorial->update($request->all());
+
+            $idSubCategoria = $tutorial->sub_categoria_id;
+
+            $tutorial->update();
+
+            return redirect()->route('sub_categoria.show', $idSubCategoria);
         }
-
-        $tutorial->update();
-
-        return redirect()->route('sub_categoria.show', $idSubCategoria);
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -220,18 +199,23 @@ class TutorialController extends Controller
      */
     public function destroy(Tutorial $tutorial)
     {
-        //
+
+
+        $idSubCategoria = $tutorial->sub_categoria_id;
+
+        if ($tutorial->delete()) {
+            return redirect()->route('sub_categoria.show', $idSubCategoria);
+        }
     }
     public function excluir($id)
     {
 
-        $tutorial = Tutorial::find($id);
+        $itemTutorial = ItemTutorial::find($id);
 
+        $idTutorial = $itemTutorial->tutorial_id;
 
-        $idSUbCategoria = $tutorial->sub_categoria_id;
-
-        if ($tutorial->delete()) {
-            return redirect()->route('sub_categoria.show', $idSUbCategoria);
+        if ($itemTutorial->delete()) {
+            return redirect()->route('tutorial.show', $idTutorial);
         }
     }
 }

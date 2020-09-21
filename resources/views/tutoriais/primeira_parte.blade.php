@@ -112,58 +112,14 @@
                             </span>
                             @endif
                         </div>
-                        <div class="form-group{{ $errors->has('passo_numero') ? ' has-danger' : '' }}">
-                            <div class="text-left">
-                                <label class="form-control-label"
-                                    for="input-current-titulo">{{ __('Passo Nº') }}</label>
-                            </div>
-                            <input type="text" name="passo_numero" id="passo_numero"
-                                class="form-control
-                                                            form-control-alternative{{ $errors->has('passo_numero') ? ' is-invalid' : '' }}"
-                                placeholder="{{ __('Digite o titulo') }}">
-
-                            @if ($errors->has('passo_numero'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('passo_numero') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-
-                        <div class="form-group{{ $errors->has('link_video') ? ' has-danger' : '' }}">
-                            <div class="text-left">
-                                <label class="form-control-label"
-                                    for="input-current-titulo">{{ __('Iframe Vídeo Youtube') }}</label>
-                            </div>
-                            <input type="text" name="link_video" id="link_video"
-                                class="form-control
-                                                            form-control-alternative{{ $errors->has('link_video') ? ' is-invalid' : '' }}"
-                                placeholder="{{ __('Cole o link do iframe do video no youtube (Opcional)') }}">
-
-                            @if ($errors->has('link_video'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('titulo') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <div class="text-left">
-                                <label class="form-control-label"
-                                    for="input-current-nome">{{ __('Observação') }}</label>
-                            </div>
-                            <textarea class="form-control" id="summary-ckeditor" name="observacao" rows="3"
-                                name="observacao"></textarea>
-                        </div>
-
-
-
                     </div>
 
 
                     <div class="card-footer py-4">
                         <nav class="d-flex justify-content-end" aria-label="...">
-                            <a type="button" href="{{route('sub_categoria.index')}}"
+                            <a type="button" href="{{route('cliente.show', $cliente->id)}}"
                                 class="btn btn-danger col-md-2 text-center text-white">Sair</a>
-                            <button type="submit" class="btn btn-success col-md-2 text-white">Salvar</button>
+                            <button type="submit" class="btn btn-success col-md-2 text-white">Avançar</button>
                         </nav>
                     </div>
 
@@ -230,11 +186,16 @@
 
 @push('js')
 
-<script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('summary-ckeditor', {
+
+
         filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+        filebrowserBrowseUrl: '{{asset('ckeditor')}}/ckfinder/ckfinder.html',
         filebrowserUploadMethod: 'form',
+
+
+
     });
 </script>
 @endpush
