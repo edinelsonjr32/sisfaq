@@ -124,7 +124,10 @@ class ItemTutorialController extends Controller
 
 
         if ($request->link_video !== null) {
-            $itemTutorial->link_video = $request->link_video;
+            parse_str(parse_url($request->link_video, PHP_URL_QUERY), $array);
+
+
+            $itemTutorial->link_video = '<iframe width="100%" height="350px" src="https://www.youtube.com/embed/' . $array['v'] . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
         } else {
         }
 
