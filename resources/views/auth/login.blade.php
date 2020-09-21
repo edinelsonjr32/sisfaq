@@ -15,10 +15,6 @@
                                 {{ __('Use os dados abaixo para testar o sistema') }}
                             </small>
                             <br>
-                            <small>
-                                {{ __('Email Teste:') }} <strong>admin@sisfaq.com</strong><br>
-                                {{ __('Senha Teste:') }} <strong>secret123456</strong>
-                            </small>
                         </div>
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf

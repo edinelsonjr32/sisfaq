@@ -5,9 +5,13 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand pt-3" href="{{ route('home') }}">
+        <a class="navbar-brand pt-2" href="{{ route('home') }}">
+            <img src="{{ asset('argon') }}/img/brand/favicon.png" />
+        </a>
+        <a class="navbar-brand pt-4" href="{{ route('home') }}">
             SisFaq
         </a>
+
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
             <li class="nav-item dropdown">
