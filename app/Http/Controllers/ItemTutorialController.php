@@ -122,13 +122,8 @@ class ItemTutorialController extends Controller
 
         $itemTutorial->observacao = $request->observacao;
 
-        if ($request->link_video == null) {
-            # code...
-        }else{
 
-        }
-
-        if ($request->link_video == null) {
+        if ($request->link_video !== null) {
             $itemTutorial->link_video = $request->link_video;
         } else {
         }
